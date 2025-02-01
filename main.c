@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:30:48 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/01/29 15:12:31 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:17:35 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@
 	https://en.wikipedia.org/wiki/Multithreading_(computer_architecture)
 
 	https://medium.com/@ruinadd/philosophers-42-guide-the-dining-philosophers-problem-893a24bc0fe2
+
+	https://github.com/DeRuina/philosophers?source=post_page-----893a24bc0fe2--------------------------------
 
 */
