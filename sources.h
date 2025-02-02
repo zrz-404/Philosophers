@@ -6,11 +6,13 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/01/26 18:01:08 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:08:04 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOURCES_H
 # define SOURCES_H
+
+# include <pthread.h>
 
 #endif	// SOURCES_H
