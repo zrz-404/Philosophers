@@ -67,6 +67,7 @@
 
 	threads with  code: https://www.youtube.com/watch?v=ldJ8WGZVXZk
 
-
+	When attempting to use mutexes, one should use them inside the fucntion which 
+	will be called by (or put inside of, in other words) each thread
 
 */
