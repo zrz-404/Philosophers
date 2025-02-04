@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:30:48 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/04 14:57:23 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:42:58 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,25 @@
 
 
 
+// check if inputs are numeric
 
+static int check_content(char *arg)
+{
+	int i;
 
+	i = 0;
+	while (arg[i] != '\0')
+	{
+		if (arg[i] < '0' || arg[i] > '9')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
-// 4 or 5 arguments, not less, not more
+// check if the input is correct
+
+// 4 or 5 numeric arguments, not less, not more
 /*
 	*1 - phi N
 	*2 - time it take phi to die if no eat
@@ -31,6 +46,8 @@ int main(int argc, char **argv)
 	t_phi			phi[PHILOS_MAX];
 	pthread_mutex_t	forks[PHILOS_MAX];
 
+	if (argc != 5 && argc != 6)
+		return(write(2, "Wrong argument count.\n", 23));
 	
 }
 
