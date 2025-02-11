@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 22:34:17 by zrz               #+#    #+#             */
-/*   Updated: 2025/02/05 23:09:14 by zrz              ###   ########.fr       */
+/*   Updated: 2025/02/11 16:08:30 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,45 @@ int ft_strlen(char *str)
     return (i);
 }
 
+static int ft_isspace(char c)
+{
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0)
+}
+
 int ft_atoi(char *str)
 {
+	int		res;
+	int		sign;
+	int		i;
 
+	i = 0;
+	res = 0;
+	sign = 1;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return (res * sign);
 }
 
 
-    // housekeeping
+    // housekeeping aka destroy mutexes n shit
 
-
+void    housekeeping(char *str, t_runtime *program, pthread_mutex_t *forks)
+{
+    
+}
 
 
 // redesigned sleep function

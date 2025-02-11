@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:30:48 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/05 22:21:06 by zrz              ###   ########.fr       */
+/*   Updated: 2025/02/11 15:57:36 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sources.h"
+#include "./sources.h"
 
 // check if inputs are numeric
 
@@ -63,6 +63,13 @@ int main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 		return(write(2, "Wrong argument count.\n", 23));
+	if (check_valid_args(argv) == 1)
+		return (1);
+	//program init
+	//forks init
+	//philos init
+	// create threads
+	//destroy mutexes (housekeeping)
 	
 }
 
