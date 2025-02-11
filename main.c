@@ -6,11 +6,11 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:30:48 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/11 15:57:36 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:36:49 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./sources.h"
+#include "sources.h"
 
 // check if inputs are numeric
 
@@ -33,15 +33,15 @@ static int check_content(char *arg)
 int	check_valid_args(char **argv)
 {
 	if (ft_atoi(argv[1]) > PHILOS_MAX || ft_atoi(argv[1]) <= 0
-		|| check_arg_content(argv[1]) == 1)
+		|| check_content(argv[1]) == 1)
 		return (write(2, "Invalid philosophers number\n", 29), 1);
-	if (ft_atoi(argv[2]) <= 0 || check_arg_content(argv[2]) == 1)
+	if (ft_atoi(argv[2]) <= 0 || check_content(argv[2]) == 1)
 		return (write(2, "Invalid time to die\n", 21), 1);
-	if (ft_atoi(argv[3]) <= 0 || check_arg_content(argv[3]) == 1)
+	if (ft_atoi(argv[3]) <= 0 || check_content(argv[3]) == 1)
 		return (write(2, "Invalid time to eat\n", 21), 1);
-	if (ft_atoi(argv[4]) <= 0 || check_arg_content(argv[4]) == 1)
+	if (ft_atoi(argv[4]) <= 0 || check_content(argv[4]) == 1)
 		return (write(2, "Invalid time to sleep\n", 23), 1);
-	if (argv[5] && (ft_atoi(argv[5]) < 0 || check_arg_content(argv[5]) == 1))
+	if (argv[5] && (ft_atoi(argv[5]) < 0 || check_content(argv[5]) == 1))
 		return (write(2, "Invalid number of times each philosopher must eat\n",
 				51), 1);
 	return (0);

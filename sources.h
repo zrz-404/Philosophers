@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/11 15:58:33 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:35:03 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,13 @@ typedef struct s_runtime
 	t_phi			*philos;
 }	t_runtime;
 
+
+
+// declarations
+
+int		ft_atoi(char *str);
+int		ft_strlen(char *str);
+size_t	get_current_time(void);
+int		ft_usleep(size_t milisecs);
 
 #endif	// SOURCES_H

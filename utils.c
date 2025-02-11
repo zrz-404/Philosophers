@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 22:34:17 by zrz               #+#    #+#             */
-/*   Updated: 2025/02/11 16:08:30 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:38:23 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int ft_usleep(size_t milisecs)
 {
     size_t  start;
 
-    start = get_current_time;
+    start = get_current_time();
     while ((get_current_time() - start) < milisecs)
         usleep(500);
     return (0);
