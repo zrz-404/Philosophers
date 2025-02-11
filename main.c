@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:30:48 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/11 16:36:49 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/12 00:06:09 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ int	check_valid_args(char **argv)
 */
 int main(int argc, char **argv)
 {
-	t_runtime		runtime;
+	t_exe		exe;
 	t_phi			phi[PHILOS_MAX];
 	pthread_mutex_t	forks[PHILOS_MAX];
+	int				i, n;
+	
 
 	if (argc != 5 && argc != 6)
 		return(write(2, "Wrong argument count.\n", 23));

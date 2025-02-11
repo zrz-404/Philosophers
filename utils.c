@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 22:34:17 by zrz               #+#    #+#             */
-/*   Updated: 2025/02/11 16:38:23 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/12 00:19:11 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int ft_isspace(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
-	return (0)
+	return (0);
 }
 
 int ft_atoi(char *str)
@@ -57,12 +57,12 @@ int ft_atoi(char *str)
 }
 
 
-    // housekeeping aka destroy mutexes n shit
-
-void    housekeeping(char *str, t_runtime *program, pthread_mutex_t *forks)
+    // housekeeping aka destroy mutexes n shIT
+void    housekeeping(char *str, t_exe *exe, pthread_mutex_t *forks)
 {
-    
+
 }
+
 
 
 // redesigned sleep function

@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/11 16:35:03 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/12 00:15:20 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_phi
 	size_t			t_sleep;// time it takes to sleep
 	size_t			start_time;
 	int				phi_num;
-	int				times_to_eat_num;
+	int				n_eat;	// number of times to eat
 	int				*dead;
 	pthread_mutex_t *r_fork;
 	pthread_mutex_t *l_fork;
@@ -42,14 +42,14 @@ typedef struct s_phi
 	pthread_mutex_t	*meal_lock;
 }	t_phi;
 
-typedef struct s_runtime
+typedef struct s_exe
 {
-	int				flagged_dead;
+	int				f_dead;
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	write_lock;
 	t_phi			*philos;
-}	t_runtime;
+}	t_exe;
 
 
 
@@ -61,3 +61,17 @@ size_t	get_current_time(void);
 int		ft_usleep(size_t milisecs);
 
 #endif	// SOURCES_H
+
+/*
+ *	A philosopher will try to grab a fork?chopstick by executing a wait() operation
+ *	on that semaphore (which represents a fork)
+ *
+ *	he releases said fork by executing signal() on the semaphores being acted upon
+ *
+ *	the shared data are
+ *	
+ *		semaphore fork[n];
+ *	
+ *	where all elements of 'fork' are initialized to one
+
+*/
