@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:48:25 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/12 00:19:04 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/12 21:37:04 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_philos(t_phi *phi, t_exe *exe, pthread_mutex_t *forks, char **argv)
 		phi[i].last_meal = get_current_time();
 		phi[i].write_lock = &exe->write_lock;
 		phi[i].dead_lock = &exe->dead_lock;
-		phi[i].meal_lock = &exe->f_dead;
+		phi[i].meal_lock = &exe->meal_lock;
 		phi[i].l_fork = &forks[i];
 		if (i == 0)
 			phi[i].r_fork = &forks[phi[i].phi_num - 1];
@@ -47,5 +47,29 @@ void	init_philos(t_phi *phi, t_exe *exe, pthread_mutex_t *forks, char **argv)
 			phi[i].r_fork = &forks[i - 1];
 		i++;
 	}
+}
+
+// init forks aka mutexes
+
+void	init_forks(pthread_mutex_t *forks, int phi_num)
+{
+	int	i;
+
+	i = 0;
+
+	while (i < phi_num)
+	{
+		pthread_mutex_init(&forks[i], NULL);
+		i++;
+	}
+}
+
+void	init_struct(t_exe *exe, t_phi *philos)
+{
+	exe->f_dead = 0; //everyone starts alive
+	exe->philos = philos;
+	pthread_mutex_init(&exe->write_lock, NULL);
+	pthread_mutex_init(&exe->dead_lock, NULL);
+	pthread_mutex_init(&exe->meal_lock, NULL);
 }
 

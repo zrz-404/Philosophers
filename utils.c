@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 22:34:17 by zrz               #+#    #+#             */
-/*   Updated: 2025/02/12 00:19:11 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/12 21:40:24 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,22 @@ int ft_atoi(char *str)
     // housekeeping aka destroy mutexes n shIT
 void    housekeeping(char *str, t_exe *exe, pthread_mutex_t *forks)
 {
+    int i;
 
+    i = 0;
+    if(str)
+    {
+        write(2, str, ft_strlen(str));
+        write(2, "\n",1);
+    }
+    pthread_mutex_destroy(&exe->write_lock);
+    pthread_mutex_destroy(&exe->meal_lock);
+    pthread_mutex_destroy(&exe->dead_lock);
+    while (i < exe->philos[0].phi_num)
+    {
+        pthread_mutex_destroy(&forks[i]);
+        i++;
+    }
 }
 
 
