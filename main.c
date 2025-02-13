@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:30:48 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/12 00:06:09 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:16:57 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,23 @@ int main(int argc, char **argv)
 	t_exe		exe;
 	t_phi			phi[PHILOS_MAX];
 	pthread_mutex_t	forks[PHILOS_MAX];
-	int				i, n;
+	int				i;
+	int				n;
 	
 
 	if (argc != 5 && argc != 6)
 		return(write(2, "Wrong argument count.\n", 23));
 	if (check_valid_args(argv) == 1)
 		return (1);
-	//program init
+	init_struct(&exe, phi);
+	init_forks(forks, ft_atoi(argv[1]));
+	init_philos(phi, &exe, forks, argv);
+	/
 	//forks init
 	//philos init
 	// create threads
 	//destroy mutexes (housekeeping)
-	
+	return (0);
 }
 
 

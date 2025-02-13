@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/12 00:15:20 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:00:43 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ int		ft_strlen(char *str);
 size_t	get_current_time(void);
 int		ft_usleep(size_t milisecs);
 
+// inits
+
+void init_philos(t_phi *phi, t_exe *exe, pthread_mutex_t *forks, char **argv);
+void init_struct(t_exe *exe, t_phi *philos);
+void init_forks(pthread_mutex_t *forks, int phi_num);
 #endif	// SOURCES_H
 
 /*
