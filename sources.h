@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/13 16:00:43 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 00:11:58 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,31 @@ typedef struct s_exe
 
 
 // declarations
-
 int		ft_atoi(char *str);
 int		ft_strlen(char *str);
 size_t	get_current_time(void);
 int		ft_usleep(size_t milisecs);
 
 // inits
-
 void init_philos(t_phi *phi, t_exe *exe, pthread_mutex_t *forks, char **argv);
 void init_struct(t_exe *exe, t_phi *philos);
 void init_forks(pthread_mutex_t *forks, int phi_num);
+
+// routine actions
+void	print_status(t_phi *philo, char *msg);
+
+void	think(t_phi *philo);
+void	sleeping(t_phi *philo);
+void	eat(t_phi *philo);
+void	take_forks(t_phi *philo);
+void	update_meal_count(t_phi *philo);
+
+// threads
+int		check_dead_flag(t_phi *philo);
+void	*philo_routine(void *pointer);
+int		create_threads(t_phi *philos, t_exe *exe);
+void	*monitor_routine(void	*pointer);
+
 #endif	// SOURCES_H
 
 /*
