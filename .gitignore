@@ -1,0 +1,6 @@
+# mac stuff
+.DS_Store
+
+#compilation stuff
+*.o
+philo

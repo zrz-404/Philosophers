@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sources.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 03:52:12 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 23:29:18 by zrz              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	take_forks(t_phi *philo);
 void	update_meal_count(t_phi *philo);
 
 // threads
+int		check_if_dead(t_phi *philo);
 int		check_dead_flag(t_phi *philo);
 void	*philo_routine(void *pointer);
 int		create_threads(t_phi *philos, t_exe *exe);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:52:04 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 19:12:10 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 23:26:54 by zrz              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,53 @@ int	check_if_dead(t_phi *philo)
 
 // A function to check if a philosopher is dead
 
-int	check_philosopher_death(t_phi *philo)
+// int	check_philosopher_death(t_phi *philo)
+// {
+// 	size_t	time;
+// 	size_t	last_meal_time;
+
+// 	pthread_mutex_lock(philo->meal_lock);
+// 	if (philo->eating == 1)
+// 		return (0);
+// 	time = get_current_time();
+// 	last_meal_time = philo->last_meal;
+// 	pthread_mutex_unlock(philo->meal_lock);
+
+// 	if (time - last_meal_time >= philo->t_die)
+// 	{
+// 		pthread_mutex_lock(philo->dead_lock);
+// 		*philo->dead = 1;
+// 		print_status(philo, "died");
+// 		pthread_mutex_unlock(philo->dead_lock);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+int check_philosopher_death(t_phi *philo)
 {
-	size_t	time;
-	size_t	last_meal_time;
+    size_t  time;
+    size_t  last_meal_time;
+    int     is_eating;
 
-	pthread_mutex_lock(philo->meal_lock);
-	if (philo->eating == 1)
-		return (0);
-	time = get_current_time();
-	last_meal_time = philo->last_meal;
-	pthread_mutex_unlock(philo->meal_lock);
+    pthread_mutex_lock(philo->meal_lock);
+    is_eating = philo->eating;
+    last_meal_time = philo->last_meal;
+    pthread_mutex_unlock(philo->meal_lock);
 
-	if (time - last_meal_time >= philo->t_die)
-	{
-		pthread_mutex_lock(philo->dead_lock);
-		*philo->dead = 1;
-		print_status(philo, "died");
-		pthread_mutex_unlock(philo->dead_lock);
-		return (1);
-	}
-	return (0);
+    if (is_eating)
+        return (0);
+
+    time = get_current_time();
+    if (time - last_meal_time >= philo->t_die)
+    {
+        pthread_mutex_lock(philo->dead_lock);
+        *philo->dead = 1;
+        print_status(philo, "died");
+        pthread_mutex_unlock(philo->dead_lock);
+        return (1);
+    }
+    return (0);
 }
 
 // Check if all the philosophers ate the number of meals assigned in the input
