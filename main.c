@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:30:48 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/13 17:16:57 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 01:45:49 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ int main(int argc, char **argv)
 	init_struct(&exe, phi);
 	init_forks(forks, ft_atoi(argv[1]));
 	init_philos(phi, &exe, forks, argv);
-	/
-	//forks init
-	//philos init
-	// create threads
-	//destroy mutexes (housekeeping)
+	if (create_threads(phi, &exe) != 0)
+	{
+		housekeeping("Error creating threads", &exe, forks);
+		return (1);
+	}
+	housekeeping(NULL, &exe, forks);
 	return (0);
 }
 
