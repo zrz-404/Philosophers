@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:52:04 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 01:40:57 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:12:10 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,16 @@ int	check_if_dead(t_phi *philo)
 int	check_philosopher_death(t_phi *philo)
 {
 	size_t	time;
+	size_t	last_meal_time;
 
+	pthread_mutex_lock(philo->meal_lock);
 	if (philo->eating == 1)
 		return (0);
 	time = get_current_time();
-	if (time - philo->last_meal >= philo->t_die)
+	last_meal_time = philo->last_meal;
+	pthread_mutex_unlock(philo->meal_lock);
+
+	if (time - last_meal_time >= philo->t_die)
 	{
 		pthread_mutex_lock(philo->dead_lock);
 		*philo->dead = 1;
@@ -97,3 +102,26 @@ void	*monitor_routine(void *pointer)
 	return (NULL);
 }
 
+/*
+void	*monitor_routine(void *pointer)
+{
+	t_phi	*philos;
+	int		i;
+
+	philos = (t_phi *)pointer;
+	while (1)
+	{
+		i = 0;
+		if (check_all_ate(philos))
+			break ;
+		while (i < philos[0].phi_num)
+		{
+			if (check_philosopher_death(&philos[i]) == 1)
+				return (NULL);
+			i++;
+		}
+		ft_usleep(1);
+	}
+	return (NULL);
+}
+*/

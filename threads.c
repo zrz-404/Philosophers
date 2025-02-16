@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:27:58 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 01:15:42 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:19:23 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	create_threads(t_phi *philos, t_exe *exe)
 	int			i;
 
 	i = 0;
-	while (1 < philos[0].phi_num)
+	while (i < philos[0].phi_num)
 	{
 		philos[i].dead = &exe->f_dead;
 		if (pthread_create(&philos[i].thread, NULL,

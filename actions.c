@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:50:00 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/15 23:54:34 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:07:20 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,14 @@ void	eat(t_phi *philo)
 	if (*philo->dead != 1)
 	{
 		print_status(philo, "is eating");
+		pthread_mutex_lock(philo->meal_lock);
 		philo->eating = 1;
 		philo->last_meal = get_current_time();
+		pthread_mutex_unlock(philo->meal_lock);
 		pthread_mutex_unlock(philo->dead_lock);
 		ft_usleep(philo->t_eat);
 		update_meal_count(philo);
+		pthread_mutex_lock(philo->meal_lock);
 		philo->eating = 0;
 		release_forks(philo);
 		return ;
