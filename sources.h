@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 00:11:58 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 03:52:12 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int		ft_atoi(char *str);
 int		ft_strlen(char *str);
 size_t	get_current_time(void);
 int		ft_usleep(size_t milisecs);
+void    housekeeping(char *str, t_exe *exe, pthread_mutex_t *forks);
 
 // inits
 void init_philos(t_phi *phi, t_exe *exe, pthread_mutex_t *forks, char **argv);
