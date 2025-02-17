@@ -6,15 +6,15 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 22:34:17 by zrz               #+#    #+#             */
-/*   Updated: 2025/02/17 17:45:01 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:57:27 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sources.h"
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	if (str == NULL)
 		return (0);
@@ -24,23 +24,16 @@ int ft_strlen(char *str)
 	return (i);
 }
 
-static int ft_isspace(char c)
+int	ft_atoi(char *str)
 {
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (1);
-	return (0);
-}
-
-int ft_atoi(char *str)
-{
-	int		res;
-	int		sign;
-	int		i;
+	int	sign;
+	int	res;
+	int	i;
 
 	i = 0;
 	res = 0;
 	sign = 1;
-	while (ft_isspace(str[i]))
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 	{
@@ -56,17 +49,16 @@ int ft_atoi(char *str)
 	return (res * sign);
 }
 
-
-	// housekeeping aka destroy mutexes n shIT
-void    housekeeping(char *str, t_exe *exe, pthread_mutex_t *forks)
+// housekeeping aka destroy mutexes n shIT
+void	housekeeping(char *str, t_exe *exe, pthread_mutex_t *forks)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(str)
+	if (str)
 	{
 		write(2, str, ft_strlen(str));
-		write(2, "\n",1);
+		write(2, "\n", 1);
 	}
 	pthread_mutex_destroy(&exe->write_lock);
 	pthread_mutex_destroy(&exe->meal_lock);
@@ -78,58 +70,18 @@ void    housekeeping(char *str, t_exe *exe, pthread_mutex_t *forks)
 	}
 }
 
-
-
-// redesigned sleep function
-
-/*  int ft_usleep(size_t milisecs)
-
-	finer control over the usleep duration by repeatedly
-	checking the elapsed time and yielding the CPU in
-	small increments (500 microseconds). Also allows for
-	more a precise "wake up"
-
-	
-*/
-
-// int ft_usleep(size_t milisecs)
-
-// {
-
-//     size_t  start;
-//     size_t  current;
-
-
-//     start = get_current_time();
-
-//     while (1)
-
-//     {
-
-//         current = get_current_time();
-
-//         if (current - start >= milisecs)
-
-//             break;
-
-//         usleep(45);  // Smaller sleep intervals for better precision
-//     }
-//     return (0);
-
-//}
-
-int ft_usleep(size_t milliseconds)
+int	ft_usleep(size_t milliseconds)
 {
-	size_t  start;
-	size_t  elapsed;
-	size_t  remaining;
+	size_t	start;
+	size_t	elapsed;
+	size_t	remaining;
 
 	start = get_current_time();
 	while (1)
 	{
 		elapsed = get_current_time() - start;
 		if (elapsed >= milliseconds)
-			break;
+			break ;
 		remaining = milliseconds - elapsed;
 		if (milliseconds - elapsed > 5)
 			usleep(500);
@@ -139,19 +91,15 @@ int ft_usleep(size_t milliseconds)
 	return (0);
 }
 
-
 /*  size_t get_current_time(void)
-
 	gettimeofday function to get the current time of day,
 	then convert this time into milliseconds by multiplying
 	the seconds by 1000 and adding the microseconds divided by 1000.
-
 	TLDR: returns curent time in miliseconds
 */
-
-size_t get_current_time(void)
+size_t	get_current_time(void)
 {
-	struct timeval  time;
+	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
 		write(2, "gettimeofday() error\n", 22);

@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:48:25 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/17 17:44:05 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/17 21:02:06 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,11 @@ void	init_philos(t_phi *phi, t_exe *exe, pthread_mutex_t *forks, char **argv)
 }
 
 // init forks aka mutexes
-
 void	init_forks(pthread_mutex_t *forks, int phi_num)
 {
 	int	i;
 
 	i = 0;
-
 	while (i < phi_num)
 	{
 		pthread_mutex_init(&forks[i], NULL);
@@ -68,7 +66,7 @@ void	init_forks(pthread_mutex_t *forks, int phi_num)
 
 void	init_struct(t_exe *exe, t_phi *philos)
 {
-	exe->f_dead = 0; //everyone starts alive
+	exe->f_dead = 0;
 	exe->philos = philos;
 	pthread_mutex_init(&exe->write_lock, NULL);
 	pthread_mutex_init(&exe->dead_lock, NULL);
