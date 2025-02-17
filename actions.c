@@ -6,15 +6,9 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:50:00 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/17 21:13:11 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/17 21:15:02 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// a function for the thinking action, also prints that it is perfomring this action
-
-// a function for the sleeping action, also prints that it is performing this action
-
-// a function for the eating action which, not only prints that it is performing this action, but also before prints when a fork is taken
 
 #include "sources.h"
 
@@ -40,7 +34,7 @@ void	think(t_phi *philo)
 		think_time = (philo->t_die - (philo->t_eat + philo->t_sleep)) / 2;
 		if (think_time > 0)
 			ft_usleep(think_time);
-		return;
+		return ;
 	}
 	pthread_mutex_unlock(philo->dead_lock);
 }
@@ -53,7 +47,7 @@ void	sleeping(t_phi *philo)
 		print_status(philo, "is sleeping");
 		pthread_mutex_unlock(philo->dead_lock);
 		ft_usleep(philo->t_sleep);
-		return;
+		return ;
 	}
 	pthread_mutex_unlock(philo->dead_lock);
 }
@@ -64,7 +58,7 @@ void	take_forks(t_phi *philo)
 	{
 		pthread_mutex_lock(philo->l_fork);
 		print_status(philo, "has taken a fork");
-		return;
+		return ;
 	}
 	if (philo->id % 2 == 0)
 	{
@@ -89,7 +83,7 @@ void	release_forks(t_phi *philo)
 	if (philo->phi_num == 1)
 	{
 		pthread_mutex_unlock(philo->l_fork);
-		return;
+		return ;
 	}
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
@@ -105,11 +99,10 @@ void	update_meal_count(t_phi *philo)
 void	eat(t_phi *philo)
 {
 	take_forks(philo);
-
 	if (check_dead_flag(philo))
 	{
 		release_forks(philo);
-		return;
+		return ;
 	}
 	pthread_mutex_lock(philo->meal_lock);
 	philo->eating = 1;
