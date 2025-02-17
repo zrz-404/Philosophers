@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:30:48 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/17 01:57:28 by zrz              ###   ########.fr       */
+/*   Updated: 2025/02/17 17:44:16 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_valid_args(char **argv)
 	if (ft_atoi(argv[4]) <= 0 || check_content(argv[4]) == 1)
 		return (write(2, "Invalid time to sleep\n", 23), 1);
 	if (argv[5] && (ft_atoi(argv[5]) < 0 || check_content(argv[5]) == 1))
-		return (write(2, "Invalid number of times each philosopher must eat\n",
+		return (write(2, "Invalid number of meals\n",
 				51), 1);
 	return (0);
 }

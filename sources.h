@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sources.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 23:29:18 by zrz              ###   ########.fr       */
+/*   Updated: 2025/02/17 17:44:47 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	think(t_phi *philo);
 void	sleeping(t_phi *philo);
 void	eat(t_phi *philo);
 void	take_forks(t_phi *philo);
+void    release_forks(t_phi *philo);
 void	update_meal_count(t_phi *philo);
 
 // threads

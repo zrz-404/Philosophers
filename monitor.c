@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:52:04 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 23:26:54 by zrz              ###   ########.fr       */
+/*   Updated: 2025/02/17 17:44:31 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,60 @@ int	check_if_dead(t_phi *philo)
 // 	return (0);
 // }
 
+// int check_philosopher_death(t_phi *philo) - last working version
+// {
+//     size_t  time;
+//     size_t  last_meal_time;
+//     int     is_eating;
+
+//     pthread_mutex_lock(philo->meal_lock);
+//     is_eating = philo->eating;
+//     last_meal_time = philo->last_meal;
+//     pthread_mutex_unlock(philo->meal_lock);
+
+//     if (is_eating)
+//         return (0);
+
+//     time = get_current_time();
+//     if (time - last_meal_time >= philo->t_die)
+//     {
+//         pthread_mutex_lock(philo->dead_lock);
+//         *philo->dead = 1;
+//         print_status(philo, "died");
+//         pthread_mutex_unlock(philo->dead_lock);
+//         return (1);
+//     }
+//     return (0);
+// }
+
 int check_philosopher_death(t_phi *philo)
 {
-    size_t  time;
-    size_t  last_meal_time;
-    int     is_eating;
+	size_t  time;
+	size_t  last_meal_time;
 
-    pthread_mutex_lock(philo->meal_lock);
-    is_eating = philo->eating;
-    last_meal_time = philo->last_meal;
-    pthread_mutex_unlock(philo->meal_lock);
-
-    if (is_eating)
-        return (0);
-
-    time = get_current_time();
-    if (time - last_meal_time >= philo->t_die)
-    {
-        pthread_mutex_lock(philo->dead_lock);
-        *philo->dead = 1;
-        print_status(philo, "died");
-        pthread_mutex_unlock(philo->dead_lock);
-        return (1);
-    }
-    return (0);
+	pthread_mutex_lock(philo->meal_lock);
+	if (philo->eating == 1)
+	{
+		pthread_mutex_unlock(philo->meal_lock);
+		return (0);
+	}
+	last_meal_time = philo->last_meal;
+	pthread_mutex_unlock(philo->meal_lock);
+	time = get_current_time();
+	if (time - last_meal_time >= philo->t_die)
+	{
+		pthread_mutex_lock(philo->dead_lock);
+		*philo->dead = 1;
+		print_status(philo, "died");
+		pthread_mutex_unlock(philo->dead_lock);
+		return (1);
+	}
+	return (0);
 }
+
+
+
+
 
 // Check if all the philosophers ate the number of meals assigned in the input
 
@@ -101,12 +130,41 @@ int	check_all_ate(t_phi *philos)
 	return (0);
 }
 
-void	*monitor_routine(void *pointer)
+
+// void    *monitor_routine(void *pointer)
+// {
+//     t_phi   *philos;
+//     int     i;
+
+//     philos = (t_phi *)pointer;
+//     while (1)
+//     {
+//         i = 0;
+//         while (i < philos[0].phi_num)
+//         {
+//             if (check_philosopher_death(&philos[i]) == 1)
+//                 return (NULL);
+//             i++;
+//         }
+//         if (check_all_ate(philos) == 1)
+//         {
+//             pthread_mutex_lock(philos[0].dead_lock);
+//             *philos[0].dead = 1;
+//             pthread_mutex_unlock(philos[0].dead_lock);
+//             return (NULL);
+//         }
+//         ft_usleep(1);
+//     }
+// }
+
+
+void    *monitor_routine(void *pointer)
 {
-	t_phi	*philos;
-	int		i;
+	t_phi   *philos;
+	int     i;
 
 	philos = (t_phi *)pointer;
+	ft_usleep(5);
 	while (1)
 	{
 		i = 0;
@@ -114,6 +172,8 @@ void	*monitor_routine(void *pointer)
 		{
 			if (check_philosopher_death(&philos[i]) == 1)
 				return (NULL);
+			if (i % 10 == 0)  // Check fewer philosophers at once
+				ft_usleep(1);
 			i++;
 		}
 		if (check_all_ate(philos) == 1)
@@ -125,8 +185,35 @@ void	*monitor_routine(void *pointer)
 		}
 		ft_usleep(1);
 	}
-	return (NULL);
 }
+
+
+// void	*monitor_routine(void *pointer) last working version
+// {
+// 	t_phi	*philos;
+// 	int		i;
+
+// 	philos = (t_phi *)pointer;
+// 	while (1)
+// 	{
+// 		i = 0;
+// 		while (i < philos[0].phi_num)
+// 		{
+// 			if (check_philosopher_death(&philos[i]) == 1)
+// 				return (NULL);
+// 			i++;
+// 		}
+// 		if (check_all_ate(philos) == 1)
+// 		{
+// 			pthread_mutex_lock(philos[0].dead_lock);
+// 			*philos[0].dead = 1;
+// 			pthread_mutex_unlock(philos[0].dead_lock);
+// 			return (NULL);
+// 		}
+// 		ft_usleep(1);
+// 	}
+// 	return (NULL);
+// }
 
 /*
 void	*monitor_routine(void *pointer)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:27:58 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 23:51:40 by zrz              ###   ########.fr       */
+/*   Updated: 2025/02/17 17:44:54 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,76 @@ int	check_dead_flag(t_phi *philo)
 // 	return (NULL);
 // }
 
+// void    *philo_routine(void *pointer)
+// {
+//     t_phi *philo;
+
+//     philo = (t_phi *)pointer;
+//     pthread_mutex_lock(philo->meal_lock);
+//     philo->last_meal = get_current_time();
+//     pthread_mutex_unlock(philo->meal_lock);
+	
+//     // Better initial delay for even philosophers
+//     if (philo->id % 2 == 0)
+//         ft_usleep(philo->t_eat / 2);
+
+//     while (check_dead_flag(philo) != 1)
+//     {
+//         eat(philo);
+//         sleeping(philo);
+//         think(philo);
+//     }
+//     return (NULL);
+// }
+
+// void    *philo_routine(void *pointer)
+// {
+//     t_phi *philo;
+
+//     philo = (t_phi *)pointer;
+//     pthread_mutex_lock(philo->meal_lock);
+//     philo->last_meal = get_current_time();
+//     pthread_mutex_unlock(philo->meal_lock);
+//     if (philo->id % 2 == 0)
+//         ft_usleep(2);
+//     while (!check_dead_flag(philo))
+//     {
+//         eat(philo);
+//         if (check_dead_flag(philo))
+//             break;
+//         sleeping(philo);
+//         think(philo);
+//     }
+//     return (NULL);
+// }
+
 void    *philo_routine(void *pointer)
 {
-    t_phi *philo;
+	t_phi *philo;
 
-    philo = (t_phi *)pointer;
-    pthread_mutex_lock(philo->meal_lock);
-    philo->last_meal = get_current_time();
-    pthread_mutex_unlock(philo->meal_lock);
-    
-    // Better initial delay for even philosophers
-    if (philo->id % 2 == 0)
-        ft_usleep(philo->t_eat / 2);
-
-    while (check_dead_flag(philo) != 1)
-    {
-        eat(philo);
-        sleeping(philo);
-        think(philo);
-    }
-    return (NULL);
+	philo = (t_phi *)pointer;
+	pthread_mutex_lock(philo->meal_lock);
+	philo->last_meal = get_current_time();
+	pthread_mutex_unlock(philo->meal_lock);
+	if (philo->phi_num == 1)
+	{
+		take_forks(philo);  // Will only take one fork
+		while (!check_dead_flag(philo))
+			ft_usleep(1);
+		release_forks(philo);
+		return (NULL);
+	}
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->t_eat / 2);
+	while (!check_dead_flag(philo))
+	{
+		eat(philo);
+		if (check_dead_flag(philo))
+			break;
+		sleeping(philo);
+		think(philo);
+	}
+	return (NULL);
 }
 
 
