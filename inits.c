@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:48:25 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/12 21:37:04 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/17 01:57:05 by zrz              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,19 @@ void	init_arguments(t_phi *philos, char **argv)
 
 void	init_philos(t_phi *phi, t_exe *exe, pthread_mutex_t *forks, char **argv)
 {
-	int	i;
+	int		i;
+	size_t	start_time;
 
 	i = 0;
+	start_time = get_current_time();
 	while (i < ft_atoi(argv[1]))
 	{
 		phi[i].id = i + 1;
 		phi[i].eating = 0;
 		phi[i].meals_eaten = 0;
 		init_arguments(&phi[i], argv);
-		phi[i].start_time = get_current_time();
-		phi[i].last_meal = get_current_time();
+		phi[i].start_time = start_time;
+		phi[i].last_meal = start_time;
 		phi[i].write_lock = &exe->write_lock;
 		phi[i].dead_lock = &exe->dead_lock;
 		phi[i].meal_lock = &exe->meal_lock;
@@ -72,4 +74,3 @@ void	init_struct(t_exe *exe, t_phi *philos)
 	pthread_mutex_init(&exe->dead_lock, NULL);
 	pthread_mutex_init(&exe->meal_lock, NULL);
 }
-

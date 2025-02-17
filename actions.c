@@ -6,7 +6,7 @@
 /*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:50:00 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 23:27:58 by zrz              ###   ########.fr       */
+/*   Updated: 2025/02/16 23:53:46 by zrz              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,34 @@ void	print_status(t_phi *philo, char *msg)
 
 	pthread_mutex_lock(philo->write_lock);
 	time = get_current_time() - philo->start_time;
-	printf("%zu %d %s\n", time, philo->id, msg);
+	printf("%zums  philo %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(philo->write_lock);
 }
 
-void	think(t_phi *philo)
+// void	think(t_phi *philo)
+// {
+// 	pthread_mutex_lock(philo->dead_lock);
+// 	if (*philo->dead != 1)
+// 		print_status(philo, "is thinking");
+// 	pthread_mutex_unlock(philo->dead_lock);
+// }
+
+void    think(t_phi *philo)
 {
-	pthread_mutex_lock(philo->dead_lock);
-	if (*philo->dead != 1)
-		print_status(philo, "is thinking");
-	pthread_mutex_unlock(philo->dead_lock);
+    size_t time_to_think;
+
+    pthread_mutex_lock(philo->dead_lock);
+    if (*philo->dead != 1)
+    {
+        print_status(philo, "is thinking");
+        // Calculate thinking time to prevent starvation
+        time_to_think = (philo->t_die - (philo->t_eat + philo->t_sleep)) / 2;
+        pthread_mutex_unlock(philo->dead_lock);
+        if (time_to_think > 0)
+            ft_usleep(time_to_think);
+        return;
+    }
+    pthread_mutex_unlock(philo->dead_lock);
 }
 
 void	sleeping(t_phi *philo)
@@ -49,7 +67,7 @@ void	sleeping(t_phi *philo)
 	pthread_mutex_unlock(philo->dead_lock);
 }
 
-// void	take_forks(t_phi *philo)
+// void	take_forks(t_phi *philo)	OG
 // {
 // 	pthread_mutex_lock(philo->l_fork);
 // 	pthread_mutex_lock(philo->dead_lock);
@@ -63,8 +81,28 @@ void	sleeping(t_phi *philo)
 // 	pthread_mutex_unlock(philo->dead_lock);
 // }
 
+// void    take_forks(t_phi *philo)
+// {
+//     if (philo->id % 2 == 0)
+//     {
+//         pthread_mutex_lock(philo->r_fork);
+//         print_status(philo, "has taken a fork");
+//         pthread_mutex_lock(philo->l_fork);
+//         print_status(philo, "has taken a fork");
+//     }
+//     else
+//     {
+//         pthread_mutex_lock(philo->l_fork);
+//         print_status(philo, "has taken a fork");
+//         pthread_mutex_lock(philo->r_fork);
+//         print_status(philo, "has taken a fork");
+//     }
+// }
+
 void    take_forks(t_phi *philo)
 {
+    // Even philosophers take right fork first, odd take left fork first
+    // This helps prevent deadlocks and reduces competition
     if (philo->id % 2 == 0)
     {
         pthread_mutex_lock(philo->r_fork);
@@ -74,6 +112,7 @@ void    take_forks(t_phi *philo)
     }
     else
     {
+        ft_usleep(1); // Small delay for odd philosophers
         pthread_mutex_lock(philo->l_fork);
         print_status(philo, "has taken a fork");
         pthread_mutex_lock(philo->r_fork);

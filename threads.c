@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zrz <zrz@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:27:58 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/16 17:19:23 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/16 23:51:40 by zrz              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,44 @@ int	check_dead_flag(t_phi *philo)
 }
 
 // Thread routine
-void	*philo_routine(void *pointer)
-{
-	t_phi *philo;
+// void	*philo_routine(void *pointer)
+// {
+// 	t_phi *philo;
 
-	philo = (t_phi *)pointer;
-	if (philo->id % 2 == 0)
-		ft_usleep(1);
-	while (check_dead_flag(philo) != 1)
-	{
-		eat(philo);
-		sleeping(philo);
-		think(philo);
-	}
-	return (NULL);
+// 	philo = (t_phi *)pointer;
+// 	if (philo->id % 2 == 0)
+// 		ft_usleep(1);
+// 	while (check_dead_flag(philo) != 1)
+// 	{
+// 		eat(philo);
+// 		sleeping(philo);
+// 		think(philo);
+// 	}
+// 	return (NULL);
+// }
+
+void    *philo_routine(void *pointer)
+{
+    t_phi *philo;
+
+    philo = (t_phi *)pointer;
+    pthread_mutex_lock(philo->meal_lock);
+    philo->last_meal = get_current_time();
+    pthread_mutex_unlock(philo->meal_lock);
+    
+    // Better initial delay for even philosophers
+    if (philo->id % 2 == 0)
+        ft_usleep(philo->t_eat / 2);
+
+    while (check_dead_flag(philo) != 1)
+    {
+        eat(philo);
+        sleeping(philo);
+        think(philo);
+    }
+    return (NULL);
 }
+
 
 // Creating all the threads
 int	create_threads(t_phi *philos, t_exe *exe)
