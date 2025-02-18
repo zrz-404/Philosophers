@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:52:04 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/17 21:17:08 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:20:42 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ int	check_philosopher_death(t_phi *philo)
 	last_meal_time = philo->last_meal;
 	pthread_mutex_unlock(philo->meal_lock);
 	time = get_current_time();
-	if (time - last_meal_time >= philo->t_die)
+	if ((time - last_meal_time) >= philo->t_die)
 	{
 		pthread_mutex_lock(philo->dead_lock);
-		*philo->dead = 1;
-		print_status(philo, "died");
+		if (*philo->dead != 1)
+		{
+			*philo->dead = 1;
+			print_status(philo, "died");
+		}
 		pthread_mutex_unlock(philo->dead_lock);
 		return (1);
 	}
@@ -58,6 +61,8 @@ int	check_all_ate(t_phi *philos)
 	done_eating = 0;
 	if (philos[0].n_eat == -1)
 		return (0);
+	if (philos[0].n_eat == 0)
+		return (1);
 	while (i < philos[0].phi_num)
 	{
 		pthread_mutex_lock(philos[i].meal_lock);
@@ -71,31 +76,38 @@ int	check_all_ate(t_phi *philos)
 	return (0);
 }
 
+static void	set_dead_flag(t_phi *philos)
+{
+	pthread_mutex_lock(philos[0].dead_lock);
+	*philos[0].dead = 1;
+	pthread_mutex_unlock(philos[0].dead_lock);
+}
+
 void	*monitor_routine(void *pointer)
 {
 	t_phi	*philos;
 	int		i;
 
 	philos = (t_phi *)pointer;
-	ft_usleep(5);
 	while (1)
 	{
 		i = 0;
 		while (i < philos[0].phi_num)
 		{
 			if (check_philosopher_death(&philos[i]) == 1)
+			{
+				pthread_mutex_lock(philos[0].dead_lock);
+				*philos[0].dead = 1;
+				pthread_mutex_unlock(philos[0].dead_lock);
 				return (NULL);
-			if (i % 10 == 0)
-				ft_usleep(1);
+			}
 			i++;
 		}
-		if (check_all_ate(philos) == 1)
+		if (check_all_ate(philos))
 		{
-			pthread_mutex_lock(philos[0].dead_lock);
-			*philos[0].dead = 1;
-			pthread_mutex_unlock(philos[0].dead_lock);
+			set_dead_flag(philos);
 			return (NULL);
 		}
-		ft_usleep(1);
+		usleep(100);
 	}
 }

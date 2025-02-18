@@ -6,7 +6,7 @@
 #    By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/16 03:55:00 by jroseiro          #+#    #+#              #
-#    Updated: 2025/02/16 03:58:59 by jroseiro         ###   ########.fr        #
+#    Updated: 2025/02/18 18:18:22 by jroseiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS = 	main.c \
 		utils.c \
 		actions.c \
 		monitor.c \
-		threads.c
+		threads.c \
+		action_utils.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)

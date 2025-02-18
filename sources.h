@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 14:31:08 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/17 21:19:51 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:03:33 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	think(t_phi *philo);
 void	sleeping(t_phi *philo);
 void	eat(t_phi *philo);
 void	take_forks(t_phi *philo);
+void	take_one_fork(t_phi *philo, pthread_mutex_t *fork);
+void	take_forks_even(t_phi *philo);
+void	take_forks_odd(t_phi *philo);
 void	release_forks(t_phi *philo);
 void	update_meal_count(t_phi *philo);
 

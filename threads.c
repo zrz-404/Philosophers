@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:27:58 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/17 21:07:01 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:13:22 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	check_dead_flag(t_phi *philo)
 	return (0);
 }
 
+//routine
 void	*philo_routine(void *pointer)
 {
 	t_phi	*philo;
