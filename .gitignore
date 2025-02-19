@@ -3,4 +3,5 @@
 
 #compilation stuff
 *.o
+*.txt
 philo

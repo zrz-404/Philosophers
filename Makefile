@@ -6,7 +6,7 @@
 #    By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/16 03:55:00 by jroseiro          #+#    #+#              #
-#    Updated: 2025/02/18 18:18:22 by jroseiro         ###   ########.fr        #
+#    Updated: 2025/02/19 18:48:33 by jroseiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = philo
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror
 FSANITIZE = -fsanitize=thread
 
 # Source files
