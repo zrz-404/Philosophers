@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:50:00 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/18 20:17:11 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:28:07 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	take_forks(t_phi *philo)
 		take_forks_odd(philo);
 }
 
+	/* release_forks is kept simple because it’s only called
+	when we are sure both forks were successfully acquired */
 void	release_forks(t_phi *philo)
 {
 	if (philo->phi_num == 1)
@@ -64,31 +66,39 @@ void	release_forks(t_phi *philo)
 		pthread_mutex_unlock(philo->l_fork);
 		return ;
 	}
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_unlock(philo->r_fork);
-		pthread_mutex_unlock(philo->l_fork);
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->l_fork);
-		pthread_mutex_unlock(philo->r_fork);
-	}
+	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(philo->l_fork);
 }
+
+// void	release_forks(t_phi *philo)
+// {
+// 	if (philo->phi_num == 1)
+// 	{
+// 		pthread_mutex_unlock(philo->l_fork);
+// 		return ;
+// 	}
+// 	if (philo->id % 2 == 0)
+// 	{
+// 		pthread_mutex_unlock(philo->r_fork);
+// 		pthread_mutex_unlock(philo->l_fork);
+// 	}
+// 	else
+// 	{
+// 		pthread_mutex_unlock(philo->l_fork);
+// 		pthread_mutex_unlock(philo->r_fork);
+// 	}
+// }
 
 void	eat(t_phi *philo)
 {
 	take_forks(philo);
 	if (check_dead_flag(philo))
-	{
-		release_forks(philo);
 		return ;
-	}
 	pthread_mutex_lock(philo->meal_lock);
 	philo->eating = 1;
 	philo->last_meal = get_current_time();
-	print_status(philo, "is eating");
 	pthread_mutex_unlock(philo->meal_lock);
+	print_status(philo, "is eating");
 	ft_usleep(philo->t_eat);
 	pthread_mutex_lock(philo->meal_lock);
 	philo->eating = 0;
@@ -97,4 +107,50 @@ void	eat(t_phi *philo)
 	release_forks(philo);
 }
 
+// void    eat(t_phi *philo)
+// {
+// 	if (check_dead_flag(philo))
+// 		return ;
+// 	take_forks(philo);
+// 	if (check_dead_flag(philo))
+// 	{
+// 		release_forks(philo);
+// 		return ;
+// 	}
+// 	pthread_mutex_lock(philo->meal_lock);
+// 	philo->eating = 1;
+// 	philo->last_meal = get_current_time();
+// 	print_status(philo, "is eating");
+// 	pthread_mutex_unlock(philo->meal_lock);
+// 	ft_usleep(philo->t_eat);
+// 	pthread_mutex_lock(philo->meal_lock);
+// 	if (philo->meals_eaten < philo->n_eat)
+// 	{
+// 		philo->eating = 0;
+// 		philo->meals_eaten++;
+// 	}
+// 	pthread_mutex_unlock(philo->meal_lock);
+// 	release_forks(philo);
+// }
+
+// void	eat(t_phi *philo)
+// {
+// 	take_forks(philo);
+// 	if (check_dead_flag(philo))
+// 	{
+// 		release_forks(philo);
+// 		return ;
+// 	}
+// 	pthread_mutex_lock(philo->meal_lock);
+// 	philo->eating = 1;
+// 	philo->last_meal = get_current_time();
+// 	print_status(philo, "is eating");
+// 	pthread_mutex_unlock(philo->meal_lock);
+// 	ft_usleep(philo->t_eat);
+// 	pthread_mutex_lock(philo->meal_lock);
+// 	philo->eating = 0;
+// 	philo->meals_eaten++;
+// 	pthread_mutex_unlock(philo->meal_lock);
+// 	release_forks(philo);
+// }
 // philo->phi_num == 1 ||

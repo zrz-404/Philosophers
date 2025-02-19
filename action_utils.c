@@ -6,7 +6,7 @@
 /*   By: jroseiro <jroseiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:13:31 by jroseiro          #+#    #+#             */
-/*   Updated: 2025/02/18 20:14:31 by jroseiro         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:31:40 by jroseiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	take_forks_even(t_phi *philo)
 	take_one_fork(philo, philo->l_fork);
 	if (check_dead_flag(philo))
 	{
-		release_forks(philo);
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
 		return ;
 	}
 }
@@ -63,7 +64,8 @@ void	take_forks_odd(t_phi *philo)
 	take_one_fork(philo, philo->r_fork);
 	if (check_dead_flag(philo))
 	{
-		release_forks(philo);
+		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(philo->l_fork);
 		return ;
 	}
 }
